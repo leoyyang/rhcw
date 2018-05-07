@@ -4,12 +4,20 @@
 \alias{draw_donorpool}
 \title{Draw Optimaized Counterparts from the Donor Pool.}
 \usage{
-draw_donorpool(target, donorpool, criteria = "BIC", nvmax)
+draw_donorpool(data, target_name, donorpool_name = NULL, time_name, period,
+  criteria = "BIC", nvmax)
 }
 \arguments{
-\item{target}{The unit we want to match in the pre-treatment and to predict in the after-treatment.}
+\item{data}{The imput data, which contains the outcome Y for both the target and donor pool units,
+and also a time variable}
 
-\item{donorpool}{The candidates of donorpool we want to optimizaed.}
+\item{target_name}{The unit name we want to match in the pre-treatment and to predict in the after-treatment.}
+
+\item{donorpool_name}{The unit name of candidates in donorpool we want to optimizaed.}
+
+\item{time_name}{The name of time variable.}
+
+\item{period}{The number of observations in pre-treatment period}
 
 \item{criteria}{The information criteria we want to use.}
 

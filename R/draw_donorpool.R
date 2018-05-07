@@ -2,24 +2,42 @@
 #'
 #' \code{draw_donorpool} returns the best couterparts that match the target unit in the pre-treatment period.
 #'
-#' @param target The unit we want to match in the pre-treatment and to predict in the after-treatment.
-#' @param donorpool The candidates of donorpool we want to optimizaed.
+#' @param data The imput data, which contains the outcome Y for both the target and donor pool units,
+#'  and also a time variable
+#' @param target_name The unit name we want to match in the pre-treatment and to predict in the after-treatment.
+#' @param donorpool_name The unit name of candidates in donorpool we want to optimizaed.
+#' @param time_name The name of time variable.
+#' @param period The number of observations in pre-treatment period
 #' @param criteria The information criteria we want to use.
 #' @param nvmax The maxmum number we want to draw from the donor pool
 #'
 #' @return The list of selected optimale counterparts and the $R^2$ of the model
-draw_donorpool <-  function(target, donorpool, criteria = "BIC", nvmax) {
-  Xy <- cbind(target, donnorpool)
+draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
+                            time_name, period, criteria = "BIC", nvmax) {
+  y = data %>%
+    select(target_name)
 
-  out <- bestglm(Xy, IC = criteria, nvmax = nvmax)
+  if (is.null(donorpool_name)) {
+    X = data %>%
+      select(-matches(target_name), -matches(time_name))
+  } else {
+    X = data %>%
+      select(donorpool_name)
+  }
+
+  Xy <- cbind(X,y) %>%
+    as.data.frame()
+
+  out <- bestglm::bestglm(Xy[1:period,], IC = criteria, nvmax = nvmax)
   a <- out$BestModel
   rs <- summary(a)$r.squared
 
   # generate the name of counterparts
-  donor_pool_choosed <- names(a$coefficients)[-1]
-  donor_pool_choosed <- str_replace(donor_pool_choosed,"\\."," ")
+  donor_pool_choosed <- names(a$coefficients)[-1] %>%
+    str_replace("\\."," ")
 
   alpha <- a$coefficients[1]
+  coefficient <- a$coefficients
   a_star <- matrix(a$coefficients[-1])
 
   y_sim <- foreach(i = 1:nrow(Xy)) %do% {
@@ -35,5 +53,19 @@ draw_donorpool <-  function(target, donorpool, criteria = "BIC", nvmax) {
     rs <- 0
   }
 
-  return(donor_pool_choosed, y_sim)
+  donor_pool_result <- data.frame(coefficient)
+
+  sim_result <- data.frame(time = data[,time_name], y_actural = data[, target_name], y_sim) %>%
+    mutate(treatment_dummy = ifelse(time %in% data[1:period,time_name], 0, 1))
+  return(list(Simulation_Result = sim_result, Donor_Pool_Result = donor_pool_result, R_Square = rs))
 }
+
+
+# draw_donorpool(data = hcw_data, target_name = "Hong Kong", donorpool_name = NULL, time_name = "date", period = 20, nvmax = 6)
+# data <- hcw_data
+# target_name = "Hong Kong"
+# donorpool_name = NULL
+# time_name = "date"
+# period = 20
+# criteria = "BIC"
+# nvmax = 6
