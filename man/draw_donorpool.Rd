@@ -17,7 +17,7 @@ and also a time variable}
 
 \item{time_name}{The name of time variable.}
 
-\item{period}{The number of observations in pre-treatment period}
+\item{period}{The number of observations in pre-treatment period, start from the first period.}
 
 \item{criteria}{The information criteria we want to use.}
 
