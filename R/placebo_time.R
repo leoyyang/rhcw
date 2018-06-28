@@ -10,34 +10,58 @@
 #'  we could set the lead_period = 3
 #'
 #' @return The ggplot object visualizing the placebo test using fake treatment time
-draw_donorpool <-  function(result, lead_period) {
+placebo_time <-  function(result, lead_period) {
   # we generate the result for different treatment time point
   placebo_plot_result <- foreach(time = 0:lead_period, .combine = rbind) %do% {
     placebo_result <- draw_donorpool(data = result$data, target_name = result$target_name, donorpool_name = result$donorpool_name,
                                      time_name = result$time_name, period = result$period - time, nvmax = result$nvmax)
 
     # Gather the actural and counterfactual value
-    delta_result <- result$Simulation_Result %>%
+    delta_result <- placebo_result$Simulation_Result %>%
       mutate(delta = y_sim - y_actural) %>%
       # Generate a group label
-      mutate(treatment_period = result$period - time)
+      mutate(treatment_period = placebo_result$period)
 
     return(delta_result)
-  }
+  } %>%
+    mutate(`Treatment Time` = sprintf("t - %d", result$period - treatment_period))
+
+  # Generate the name of time variable that indicated the real after treatment period
+  period_min <- placebo_plot_result %>%
+    filter(treatment_period == result$period) %>%
+    filter(treatment_dummy == 1) %>%
+    select(time) %>%
+    head(1) %>%
+    .[1,1]
+
+  period_max <- placebo_plot_result %>%
+    filter(treatment_period == result$period) %>%
+    filter(treatment_dummy == 1) %>%
+    select(time) %>%
+    tail(1) %>%
+    .[1,1]
+
+  # Prepare the data for figure
+  real_placebo_plot_result <- placebo_plot_result %>%
+    filter(`Treatment Time` == "t - 0")
 
   # Plot the figure
   plot_placebo_time_object <- placebo_plot_result %>%
-    ggplot(aes(time, delta, color = treatment_period)) +
-    # annotate("rect", xmin = period_min, xmax = period_max,
-    #          ymin = -Inf, ymax = Inf,
-    #          fill = "grey", colour = "grey", alpha = 0.4) +
+    ggplot() +
+    annotate("rect", xmin = period_min, xmax = period_max,
+             ymin = -Inf, ymax = Inf,
+             fill = "grey", colour = "grey", alpha = 0.4) +
     geom_hline(yintercept = 0, linetype = "dashed",
                color = "red") +
-    geom_point() +
-    geom_line() +
+    geom_point(aes(time, delta, group = `Treatment Time`, color = `Treatment Time`), alpha = 0.4) +
+    geom_line(aes(time, delta, group = `Treatment Time`, color = `Treatment Time`), alpha = 0.4) +
+    geom_point(aes(time, delta, group = `Treatment Time`, color = `Treatment Time`), data = real_placebo_plot_result, size = 2) +
+    geom_line(aes(time, delta, group = `Treatment Time`, color = `Treatment Time`), data = real_placebo_plot_result, size = 1.2) +
     xlab("Time") +
     ylab("Difference between Counterfactual and Actual Value") +
     theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
   return(plot_placebo_time_object)
 }
+
+# placebo_time(result, 3)
