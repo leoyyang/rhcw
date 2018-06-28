@@ -36,7 +36,7 @@ result <- draw_donorpool(data = hcw_data,
  nvmax = 6)
 ```
 
-# Draw the Results
+## Draw the Results
 ```r
 plot_sim_result(result)
 ```
