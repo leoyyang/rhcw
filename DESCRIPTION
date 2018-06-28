@@ -1,6 +1,6 @@
 Package: rhcw
 Type: Package
-Title: The Panel Data Approach for Program Evaluation
+Title: The R Package of Panel Data Approach for Program Evaluation
 Version: 0.2.0
 Date: 2018-06-28
 Author: Leo Y. Yang
@@ -14,3 +14,6 @@ RoxygenNote: 6.0.1
 Imports: dplyr, tidyr, magrittr, stringr, bestglm, foreach, ggplot2, tibble
 URL: http://github.com/jpshuimu/rhcw
 BugReports: http://github.com/jpshuimu/rhcw/issues
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
