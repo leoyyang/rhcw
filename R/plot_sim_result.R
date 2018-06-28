@@ -40,6 +40,3 @@ plot_sim_result <- function(result) {
 
   return(plot_sim_result_object)
 }
-#
-# result <- draw_donorpool(data = hcw_data, target_name = "Hong Kong", donorpool_name = NULL, time_name = "date", period = 20, nvmax = 6)
-# plot_sim_result(result)

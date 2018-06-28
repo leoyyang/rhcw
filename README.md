@@ -4,6 +4,14 @@ The R Package of Panel Data Approach for Program Evaluation
 
 This package is used to do the program evaluation using the Panel Data Approach raised by Cheng Hsiao, H. Steve Ching, and Shui Ki Wan (2012), "A panel data approach for program evaluation: measuring the benefits of political and economic integration of Hong kong with mainland China", Journal of Applied Econometrics.
 
+## Installation
+
+``` r
+# The development version from GitHub:
+# install.packages("devtools")
+devtools::install_github("jpshuimu/rhcw")
+```
+
 ## Data
 This package includes the data from Hsian et.al (2012).
 
