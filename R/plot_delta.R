@@ -25,7 +25,7 @@ plot_delta <- function(result) {
     mutate(delta = y_sim - y_actural)
 
   # Plot the figure
-  plot_delta_object <- sim_result %>%
+  plot_delta_object <- delta_result %>%
     ggplot(aes(time, delta)) +
     annotate("rect", xmin = period_min, xmax = period_max,
              ymin = -Inf, ymax = Inf,

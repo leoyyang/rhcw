@@ -7,7 +7,7 @@
 #' @param target_name The unit name we want to match in the pre-treatment and to predict in the after-treatment.
 #' @param donorpool_name The unit name of candidates in donorpool we want to optimizaed.
 #' @param time_name The name of time variable.
-#' @param period The number of observations in pre-treatment period
+#' @param period The number of observations in pre-treatment period, start from the first period.
 #' @param criteria The information criteria we want to use.
 #' @param nvmax The maxmum number we want to draw from the donor pool
 #'
@@ -57,7 +57,10 @@ draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
 
   sim_result <- data.frame(time = data[,time_name], y_actural = data[, target_name], y_sim) %>%
     mutate(treatment_dummy = ifelse(time %in% data[1:period,time_name], 0, 1))
-  return(list(Simulation_Result = sim_result, Donor_Pool_Result = donor_pool_result, R_Square = rs))
+  # we also want to return all the parameters, so that we could run the placebo test with same setting.
+  return(list(Simulation_Result = sim_result, Donor_Pool_Result = donor_pool_result, R_Square = rs,
+              data = data, target_name = target_name, donorpool_name = donorpool_name,
+              time_name = time_name, period = period, criteria = criteria, nvmax = nvmax))
 }
 
 
