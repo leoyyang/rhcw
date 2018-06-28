@@ -33,19 +33,19 @@ result <- draw_donorpool(data = hcw_data,
 plot_sim_result(result)
 ```
 
-![](/Users/leo/Dropbox/R Project/rhcw/img/plot_sim_result.png)
+![](https://github.com/jpshuimu/rhcw/blob/master/img/plot_sim_result.png)
 
 ```r
 plot_delta(result)
 ```
-![](/Users/leo/Dropbox/R Project/rhcw/img/plot_delta.png)
+![](https://github.com/jpshuimu/rhcw/blob/master/img/plot_delta.png)
 # Do Placebo Test
 ```r
 placebo_time(result, lead_period = 5)
 ```
-![](/Users/leo/Dropbox/R Project/rhcw/img/placebo_time.png)
+![](https://github.com/jpshuimu/rhcw/blob/master/img/placebo_time.png)
 
 ```r
 placebo_unit(result)
 ```
-![](/Users/leo/Dropbox/R Project/rhcw/img/placebo_unit.png)
+![](https://github.com/jpshuimu/rhcw/blob/master/img/placebo_unit.png)
