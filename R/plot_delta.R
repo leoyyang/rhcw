@@ -9,20 +9,20 @@
 plot_delta <- function(result) {
   # First generate the treatment period variables
   period_min <- result$Simulation_Result %>%
-    filter(treatment_dummy == 1) %>%
-    select(time) %>%
+    dplyr::filter(treatment_dummy == 1) %>%
+    dplyr::select(time) %>%
     head(1) %>%
     .[1,1]
 
   period_max <- result$Simulation_Result %>%
-    filter(treatment_dummy == 1) %>%
-    select(time) %>%
+    dplyr::filter(treatment_dummy == 1) %>%
+    dplyr::select(time) %>%
     tail(1) %>%
     .[1,1]
 
   # Gather the actural and counterfactual value
   delta_result <- result$Simulation_Result %>%
-    mutate(delta = y_sim - y_actural)
+    dplyr::mutate(delta = y_sim - y_actural)
 
   # Plot the figure
   plot_delta_object <- delta_result %>%

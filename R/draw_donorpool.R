@@ -15,14 +15,14 @@
 draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
                             time_name, period, criteria = "BIC", nvmax) {
   y = data %>%
-    select(target_name)
+    dplyr::select(target_name)
 
   if (is.null(donorpool_name)) {
     X = data %>%
-      select(-matches(target_name), -matches(time_name))
+      dplyr::select(-matches(target_name), -matches(time_name))
   } else {
     X = data %>%
-      select(donorpool_name)
+      dplyr::select(donorpool_name)
   }
 
   Xy <- cbind(X,y) %>%
@@ -34,13 +34,13 @@ draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
 
   # generate the name of counterparts
   donor_pool_choosed <- names(a$coefficients)[-1] %>%
-    str_replace("\\."," ")
+    stringr::str_replace("\\."," ")
 
   alpha <- a$coefficients[1]
   coefficient <- a$coefficients
   a_star <- matrix(a$coefficients[-1])
 
-  y_sim <- foreach(i = 1:nrow(Xy)) %do% {
+  y_sim <- foreach::foreach(i = 1:nrow(Xy)) %do% {
     alpha + t(a_star) %*% t(as.matrix(Xy[i,donor_pool_choosed]))
   } %>%
     unlist()
@@ -56,19 +56,10 @@ draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
   donor_pool_result <- data.frame(coefficient)
 
   sim_result <- data.frame(time = data[,time_name], y_actural = data[, target_name], y_sim) %>%
-    mutate(treatment_dummy = ifelse(time %in% data[1:period,time_name], 0, 1))
+    dplyr::mutate(treatment_dummy = ifelse(time %in% data[1:period,time_name], 0, 1))
+
   # we also want to return all the parameters, so that we could run the placebo test with same setting.
   return(list(Simulation_Result = sim_result, Donor_Pool_Result = donor_pool_result, R_Square = rs,
               data = data, target_name = target_name, donorpool_name = donorpool_name,
               time_name = time_name, period = period, criteria = criteria, nvmax = nvmax))
 }
-
-
-# draw_donorpool(data = hcw_data, target_name = "Hong Kong", donorpool_name = NULL, time_name = "date", period = 20, nvmax = 6)
-# data <- hcw_data
-# target_name = "Hong Kong"
-# donorpool_name = NULL
-# time_name = "date"
-# period = 20
-# criteria = "BIC"
-# nvmax = 6

@@ -1,14 +1,16 @@
 Package: rhcw
 Type: Package
 Title: The Panel Data Approach for Program Evaluation
-Version: 0.1.0
-Author@R: person("Leo", "Yang", email = "pdshuimu@gmail.com", role = c("aut", "cre"))
-Description: This package is used to do the program evaluation using the Panel Data Approach raised by Cheng Hsiao, H. Steve Ching, and Shui Ki Wan, 2012, "A panel data approach for program evaluation: measuring the benefits of political and economic integration of Hong kong with mainland China", Journal of Applied Econometrics.
-License: GPL-3
+Version: 0.2.0
+Date: 2018-06-28
+Author: Leo Y. Yang
+Maintainer: Leo Y. Yang <pdshuimu@gmail.com>
+Description: This package is used to do the program evaluation using the Panel Data Approach raised by Cheng Hsiao, H. Steve Ching, and Shui Ki Wan (2012), "A panel data approach for program evaluation: measuring the benefits of political and economic integration of Hong kong with mainland China", Journal of Applied Econometrics.
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 2.10)
 RoxygenNote: 6.0.1
-Imports: tidyverse,
-    stringr,
-    bestglm,
-    foreach
+Imports: dplyr, tidyr, magrittr, stringr, bestglm, foreach, ggplot2, tibble
+URL: http://github.com/jpshuimu/rhcw
+BugReports: http://github.com/jpshuimu/rhcw/issues

@@ -12,38 +12,38 @@
 #' @return The ggplot object visualizing the placebo test using fake treatment time
 placebo_time <-  function(result, lead_period) {
   # we generate the result for different treatment time point
-  placebo_plot_result <- foreach(time = 0:lead_period, .combine = rbind) %do% {
+  placebo_plot_result <- foreach::foreach(time = 0:lead_period, .combine = rbind) %do% {
     placebo_result <- draw_donorpool(data = result$data, target_name = result$target_name, donorpool_name = result$donorpool_name,
                                      time_name = result$time_name, period = result$period - time, nvmax = result$nvmax)
 
     # Gather the actural and counterfactual value
     delta_result <- placebo_result$Simulation_Result %>%
-      mutate(delta = y_sim - y_actural) %>%
+      dplyr::mutate(delta = y_sim - y_actural) %>%
       # Generate a group label
-      mutate(treatment_period = placebo_result$period)
+      dplyr::mutate(treatment_period = placebo_result$period)
 
     return(delta_result)
   } %>%
-    mutate(`Treatment Time` = sprintf("t - %d", result$period - treatment_period))
+    dplyr::mutate(`Treatment Time` = sprintf("t - %d", result$period - treatment_period))
 
   # Generate the name of time variable that indicated the real after treatment period
   period_min <- placebo_plot_result %>%
-    filter(treatment_period == result$period) %>%
-    filter(treatment_dummy == 1) %>%
-    select(time) %>%
+    dplyr::filter(treatment_period == result$period) %>%
+    dplyr::filter(treatment_dummy == 1) %>%
+    dplyr::select(time) %>%
     head(1) %>%
     .[1,1]
 
   period_max <- placebo_plot_result %>%
-    filter(treatment_period == result$period) %>%
-    filter(treatment_dummy == 1) %>%
-    select(time) %>%
+    dplyr::filter(treatment_period == result$period) %>%
+    dplyr::filter(treatment_dummy == 1) %>%
+    dplyr::select(time) %>%
     tail(1) %>%
     .[1,1]
 
   # Prepare the data for figure
   real_placebo_plot_result <- placebo_plot_result %>%
-    filter(`Treatment Time` == "t - 0")
+    dplyr::filter(`Treatment Time` == "t - 0")
 
   # Plot the figure
   plot_placebo_time_object <- placebo_plot_result %>%
@@ -63,5 +63,3 @@ placebo_time <-  function(result, lead_period) {
 
   return(plot_placebo_time_object)
 }
-
-# placebo_time(result, 3)

@@ -10,43 +10,43 @@
 placebo_unit <-  function(result) {
   # we get the members of donor pool in the results as the fake treatment unit
   unit_list <- result$Donor_Pool_Result %>%
-    rownames_to_column("unit") %>%
-    filter(unit != "(Intercept)") %>%
-    pull(unit) %>%
+    tibble::rownames_to_column("unit") %>%
+    dplyr::filter(unit != "(Intercept)") %>%
+    dplyr::pull(unit) %>%
     c(result$target_name)
 
-  placebo_plot_result <- foreach(i = 1:length(unit_list), .combine = rbind) %do% {
+  placebo_plot_result <- foreach::foreach(i = 1:length(unit_list), .combine = rbind) %do% {
     placebo_result <- draw_donorpool(data = result$data, target_name = unit_list[i], donorpool_name = result$donorpool_name,
                                      time_name = result$time_name, period = result$period, nvmax = result$nvmax)
 
     # Gather the actural and counterfactual value
     delta_result <- placebo_result$Simulation_Result %>%
-      mutate(delta = y_sim - y_actural) %>%
+      dplyr::mutate(delta = y_sim - y_actural) %>%
       # Generate a group label
-      mutate(treatment_unit = unit_list[i])
+      dplyr::mutate(treatment_unit = unit_list[i])
 
     return(delta_result)
   } %>%
-    rename(`Treatment Unit` = treatment_unit)
+    dplyr::rename(`Treatment Unit` = treatment_unit)
 
   # Generate the name of time variable that indicated the real after treatment period
   period_min <- placebo_plot_result %>%
-    filter(`Treatment Unit` == result$target_name) %>%
-    filter(treatment_dummy == 1) %>%
-    select(time) %>%
+    dplyr::filter(`Treatment Unit` == result$target_name) %>%
+    dplyr::filter(treatment_dummy == 1) %>%
+    dplyr::select(time) %>%
     head(1) %>%
     .[1,1]
 
   period_max <- placebo_plot_result %>%
-    filter(`Treatment Unit` == result$target_name) %>%
-    filter(treatment_dummy == 1) %>%
-    select(time) %>%
+    dplyr::filter(`Treatment Unit` == result$target_name) %>%
+    dplyr::filter(treatment_dummy == 1) %>%
+    dplyr::select(time) %>%
     tail(1) %>%
     .[1,1]
 
   # Prepare the data for figure
   real_placebo_plot_result <- placebo_plot_result %>%
-    filter(`Treatment Unit` == result$target_name)
+    dplyr::filter(`Treatment Unit` == result$target_name)
 
   # Plot the figure
   plot_placebo_unit_object <- placebo_plot_result %>%

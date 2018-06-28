@@ -9,20 +9,20 @@
 plot_sim_result <- function(result) {
   # First generate the treatment period variables
   period_min <- result$Simulation_Result %>%
-    filter(treatment_dummy == 1) %>%
-    select(time) %>%
+    dplyr::filter(treatment_dummy == 1) %>%
+    dplyr::select(time) %>%
     head(1) %>%
     .[1,1]
 
   period_max <- result$Simulation_Result %>%
-    filter(treatment_dummy == 1) %>%
-    select(time) %>%
+    dplyr::filter(treatment_dummy == 1) %>%
+    dplyr::select(time) %>%
     tail(1) %>%
     .[1,1]
 
   # Gather the actural and counterfactual value
   sim_result <- result$Simulation_Result %>%
-    gather(key = "key", value = "Value", -time, -treatment_dummy)
+    tidyr::gather(key = "key", value = "Value", -time, -treatment_dummy)
 
   # Plot the figure
   plot_sim_result_object <- sim_result %>%
