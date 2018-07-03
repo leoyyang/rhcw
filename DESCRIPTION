@@ -11,7 +11,7 @@ Encoding: UTF-8
 LazyData: true
 Depends: R (>= 2.10)
 RoxygenNote: 6.0.1
-Imports: dplyr, tidyr, magrittr, stringr, bestglm, foreach, ggplot2, tibble
+Imports: dplyr, tidyr, magrittr, stringr, bestglm, foreach, ggplot2, tibble, magrittr
 URL: http://github.com/jpshuimu/rhcw
 BugReports: http://github.com/jpshuimu/rhcw/issues
 Suggests: knitr,
