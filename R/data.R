@@ -8,5 +8,4 @@
 #'   ...
 #' }
 #' @source Cheng Hsiao, H. Steve Ching, and Shui Ki Wan (2012), "A panel data approach for program evaluation: measuring the benefits of political and economic integration of Hong kong with mainland China", Journal of Applied Econometrics.
-#' @export
 "hcw_data"
