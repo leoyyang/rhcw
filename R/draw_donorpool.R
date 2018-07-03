@@ -13,6 +13,7 @@
 #'
 #' @return The list of selected optimale counterparts and the $R^2$ of the model
 #' @importFrom magrittr "%>%"
+#' @importFrom foreach "%do%"
 #' @export
 draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
                             time_name, period, criteria = "BIC", nvmax) {

@@ -8,6 +8,7 @@
 #'
 #' @return The ggplot object visualizing the placebo test using fake treatment units
 #' @importFrom magrittr "%>%"
+#' @importFrom foreach "%do%"
 #' @export
 placebo_unit <-  function(result) {
   # we get the members of donor pool in the results as the fake treatment unit

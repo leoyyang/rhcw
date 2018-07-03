@@ -7,6 +7,7 @@
 #'
 #' @return The ggplot object visualizing the simulation results.
 #' @importFrom magrittr "%>%"
+#' @importFrom foreach "%do%"
 #' @export
 plot_sim_result <- function(result) {
   # First generate the treatment period variables

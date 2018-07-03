@@ -11,6 +11,7 @@
 #'
 #' @return The ggplot object visualizing the placebo test using fake treatment time
 #' @importFrom magrittr "%>%"
+#' @importFrom foreach "%do%"
 #' @export
 placebo_time <-  function(result, lead_period) {
   # we generate the result for different treatment time point
