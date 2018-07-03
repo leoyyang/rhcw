@@ -21,7 +21,7 @@ draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
 
   if (is.null(donorpool_name)) {
     X = data %>%
-      dplyr::select(-matches(target_name), -matches(time_name))
+      dplyr::select(-tidyselect::matches(target_name), -tidyselect::matches(time_name))
   } else {
     X = data %>%
       dplyr::select(donorpool_name)
