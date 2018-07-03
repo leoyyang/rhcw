@@ -12,6 +12,7 @@
 #' @param nvmax The maxmum number we want to draw from the donor pool
 #'
 #' @return The list of selected optimale counterparts and the $R^2$ of the model
+#' @export
 draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
                             time_name, period, criteria = "BIC", nvmax) {
   y = data %>%

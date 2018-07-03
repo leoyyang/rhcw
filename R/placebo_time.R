@@ -10,6 +10,7 @@
 #'  we could set the lead_period = 3
 #'
 #' @return The ggplot object visualizing the placebo test using fake treatment time
+#' @export
 placebo_time <-  function(result, lead_period) {
   # we generate the result for different treatment time point
   placebo_plot_result <- foreach::foreach(time = 0:lead_period, .combine = rbind) %do% {
