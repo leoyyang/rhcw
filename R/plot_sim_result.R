@@ -29,17 +29,17 @@ plot_sim_result <- function(result) {
 
   # Plot the figure
   plot_sim_result_object <- sim_result %>%
-    ggplot2::ggplot(aes(time, Value, group = key, color = key)) +
-    annotate("rect", xmin = period_min, xmax = period_max,
+    ggplot2::ggplot(ggplot2::aes(time, Value, group = key, color = key)) +
+    ggplot2::annotate("rect", xmin = period_min, xmax = period_max,
              ymin = -Inf, ymax = Inf,
              fill = "grey", colour = "grey", alpha = 0.4) +
-    geom_point() +
-    geom_line() +
-    scale_colour_discrete(name = "",
+    ggplot2::geom_point() +
+    ggplot2::geom_line() +
+    ggplot2::scale_colour_discrete(name = "",
                           breaks = c("y_actural", "y_sim"),
                           labels = c("Actural", "Counterfactural")) +
-    xlab("Time") +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    ggplot2::xlab("Time") +
+    ggplot2::theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
   return(plot_sim_result_object)
 }

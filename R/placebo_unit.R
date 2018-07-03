@@ -54,18 +54,18 @@ placebo_unit <-  function(result) {
   # Plot the figure
   plot_placebo_unit_object <- placebo_plot_result %>%
     ggplot2::ggplot() +
-    annotate("rect", xmin = period_min, xmax = period_max,
+    ggplot2::annotate("rect", xmin = period_min, xmax = period_max,
              ymin = -Inf, ymax = Inf,
              fill = "grey", colour = "grey", alpha = 0.4) +
-    geom_hline(yintercept = 0, linetype = "dashed",
+    ggplot2::geom_hline(yintercept = 0, linetype = "dashed",
                color = "red") +
-    geom_point(aes(time, delta, group = `Treatment Unit`, color = `Treatment Unit`), alpha = 0.4) +
-    geom_line(aes(time, delta, group = `Treatment Unit`, color = `Treatment Unit`), alpha = 0.4) +
-    geom_point(aes(time, delta, group = `Treatment Unit`, color = `Treatment Unit`), data = real_placebo_plot_result, size = 2) +
-    geom_line(aes(time, delta, group = `Treatment Unit`, color = `Treatment Unit`), data = real_placebo_plot_result, size = 1.2) +
-    xlab("Time") +
-    ylab("Difference between Counterfactual and Actual Value") +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    ggplot2::geom_point(ggplot2::aes(time, delta, group = `Treatment Unit`, color = `Treatment Unit`), alpha = 0.4) +
+    ggplot2::geom_line(ggplot2::aes(time, delta, group = `Treatment Unit`, color = `Treatment Unit`), alpha = 0.4) +
+    ggplot2::geom_point(ggplot2::aes(time, delta, group = `Treatment Unit`, color = `Treatment Unit`), data = real_placebo_plot_result, size = 2) +
+    ggplot2::geom_line(ggplot2::aes(time, delta, group = `Treatment Unit`, color = `Treatment Unit`), data = real_placebo_plot_result, size = 1.2) +
+    ggplot2::xlab("Time") +
+    ggplot2::ylab("Difference between Counterfactual and Actual Value") +
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1))
 
   return(plot_placebo_unit_object)
 }
