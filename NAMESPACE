@@ -3,6 +3,7 @@
 export(draw_donorpool)
 export(placebo_time)
 export(placebo_unit)
+export(plot_delta)
 export(plot_sim_result)
 importFrom(foreach,"%do%")
 importFrom(magrittr,"%>%")

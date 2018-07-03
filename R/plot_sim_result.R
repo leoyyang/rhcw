@@ -39,7 +39,7 @@ plot_sim_result <- function(result) {
                           breaks = c("y_actural", "y_sim"),
                           labels = c("Actural", "Counterfactural")) +
     ggplot2::xlab("Time") +
-    ggplot2::theme(axis.text.x = element_text(angle = 90, hjust = 1))
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, hjust = 1))
 
   return(plot_sim_result_object)
 }
