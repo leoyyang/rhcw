@@ -29,7 +29,7 @@ plot_sim_result <- function(result) {
 
   # Plot the figure
   plot_sim_result_object <- sim_result %>%
-    ggplot(aes(time, Value, group = key, color = key)) +
+    ggplot2::ggplot(aes(time, Value, group = key, color = key)) +
     annotate("rect", xmin = period_min, xmax = period_max,
              ymin = -Inf, ymax = Inf,
              fill = "grey", colour = "grey", alpha = 0.4) +

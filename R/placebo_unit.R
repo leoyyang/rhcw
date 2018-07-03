@@ -53,7 +53,7 @@ placebo_unit <-  function(result) {
 
   # Plot the figure
   plot_placebo_unit_object <- placebo_plot_result %>%
-    ggplot() +
+    ggplot2::ggplot() +
     annotate("rect", xmin = period_min, xmax = period_max,
              ymin = -Inf, ymax = Inf,
              fill = "grey", colour = "grey", alpha = 0.4) +
