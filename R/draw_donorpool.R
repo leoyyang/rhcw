@@ -17,6 +17,8 @@
 #' @export
 draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
                             time_name, period, criteria = "BIC", nvmax) {
+  
+  `%do%` <- foreach::`%do%`
   y = data %>%
     dplyr::select(target_name)
 
@@ -42,24 +44,20 @@ draw_donorpool <-  function(data, target_name, donorpool_name = NULL,
   alpha <- a$coefficients[1]
   coefficient <- a$coefficients
   a_star <- matrix(a$coefficients[-1])
-
   y_sim <- foreach::foreach(i = 1:nrow(Xy)) %do% {
-    alpha + t(a_star) %*% t(as.matrix(Xy[i,donor_pool_choosed]))
-  } %>%
+    alpha + t(a_star) %*% t(as.matrix(Xy[i, donor_pool_choosed]))} %>% 
     unlist()
-
-  if (length(donor_pool_choosed) == 1){
-    donor_pool_choosed <- c(donor_pool_choosed,"NA")
+  if (length(donor_pool_choosed) == 1) {
+    donor_pool_choosed <- c(donor_pool_choosed, "NA")
   }
-  if (length(donor_pool_choosed) == 0){
-    donor_pool_choosed <- c("NA","NA")
+  if (length(donor_pool_choosed) == 0) {
+    donor_pool_choosed <- c("NA", "NA")
     rs <- 0
   }
-
   donor_pool_result <- data.frame(coefficient)
-
-  sim_result <- data.frame(time = data[,time_name], y_actural = data[, target_name], y_sim) %>%
-    dplyr::mutate(treatment_dummy = ifelse(time %in% data[1:period,time_name], 0, 1))
+  sim_result <- data.frame(time = data[, time_name], y_actural = data[, target_name], y_sim) %>% 
+    purrr::set_names("time", "y_actural", "y_sim") %>% 
+    dplyr::mutate(treatment_dummy = ifelse(time %in% unlist(data[1:period, time_name]), 0, 1))
 
   # we also want to return all the parameters, so that we could run the placebo test with same setting.
   return(list(Simulation_Result = sim_result, Donor_Pool_Result = donor_pool_result, R_Square = rs,
