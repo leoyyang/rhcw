@@ -13,7 +13,7 @@ devtools::install_github("jpshuimu/rhcw")
 ```
 
 ## Data
-This package includes the data from Hsian et.al (2012).
+This package includes the data from Hsiao et.al (2012).
 
 ```{r}
 library(rhcw)
