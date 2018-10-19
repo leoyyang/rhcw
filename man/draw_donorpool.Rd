@@ -4,8 +4,8 @@
 \alias{draw_donorpool}
 \title{Draw Optimaized Counterparts from the Donor Pool.}
 \usage{
-draw_donorpool(data, target_name, donorpool_name = NULL, time_name, period,
-  criteria = "BIC", nvmax)
+draw_donorpool(data, target_name, donorpool_name = NULL, time_name,
+  period, criteria = "BIC", nvmax)
 }
 \arguments{
 \item{data}{The imput data, which contains the outcome Y for both the target and donor pool units,
